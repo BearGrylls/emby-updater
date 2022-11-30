@@ -32,8 +32,8 @@ git push --tag
 echo "Build distribution files"
 python3 setup.py sdist bdist_wheel
 
-echo "upload to PyPI"
-twine upload dist/*
+#echo "upload to PyPI"
+#twine upload dist/*
 
 echo "Build binary package"
 pyinstaller --clean --onefile --name emby-updater --distpath pyindist --workpath pyinbuild embyupdater/__main__.py
