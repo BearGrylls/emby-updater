@@ -5,7 +5,7 @@ import subprocess as sp
 import sys
 from pathlib import Path
 from shutil import move
-import packaging
+from packaging.version import Version, parse
 
 import requests
 from . import version
@@ -99,7 +99,7 @@ def self_update(download_path, quiet):
         if release_json is None:
             print("Could not find any releases.")
             sys.exit(1)
-        elif packaging.version.parse(release_json["tag_name"]) > packaging.version.parse(version.version):
+        elif Version(release_json["tag_name"]) > Version(version.version):
             print(f'''There is an update available
 Installed version:    {version.version}
 Update version:       {release_json["tag_name"]} ({release_json["name"]})''')
@@ -143,7 +143,7 @@ def updater(allow_prereleases, download_path, quiet):
 
     emby_version = get_emby_version("emby-server")
 
-    if emby_version is None or packaging.version.parse(release_json["tag_name"]) > packaging.version.parse(emby_version):
+    if emby_version is None or Version(release_json["tag_name"]) > Version(emby_version):
         if emby_version is None:
             if not yes_or_no(
                     f'Emby media server is not installed.\nDo you want to install Emby ({release_json["name"]})?',
