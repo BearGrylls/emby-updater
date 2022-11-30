@@ -143,7 +143,7 @@ def updater(allow_prereleases, download_path, quiet):
 
     emby_version = get_emby_version("emby-server")
 
-    if emby_version is None or release_json["tag_name"] > emby_version:
+    if emby_version is None or packaging.version.parse(release_json["tag_name"]) > packaging.version.parse(emby_version):
         if emby_version is None:
             if not yes_or_no(
                     f'Emby media server is not installed.\nDo you want to install Emby ({release_json["name"]})?',
