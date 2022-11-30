@@ -5,6 +5,7 @@ import subprocess as sp
 import sys
 from pathlib import Path
 from shutil import move
+import packaging
 
 import requests
 from . import version
@@ -98,7 +99,7 @@ def self_update(download_path, quiet):
         if release_json is None:
             print("Could not find any releases.")
             sys.exit(1)
-        elif release_json["tag_name"] > version.version:
+        elif packaging.version.parse(release_json["tag_name"]) > packaging.version.parse(version.version):
             print(f'''There is an update available
 Installed version:    {version.version}
 Update version:       {release_json["tag_name"]} ({release_json["name"]})''')
